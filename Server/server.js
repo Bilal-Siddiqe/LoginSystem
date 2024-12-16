@@ -5,6 +5,7 @@ const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+// app.use(bodyParser.json());
 
 const allUsers = [
     {
@@ -12,9 +13,10 @@ const allUsers = [
         age: "27",
         phoneNumber: "03102097912",
         gender: "Male",
-        email: "bilal@gmail.com",
-        pwd: "bilal123",
-    }
+        email: "b",
+        pwd: "1",
+        posts: []
+    },
 ]
 
 app.listen(port, () => {
@@ -43,3 +45,18 @@ app.post("/login", (req, res) => {
         res.send("User Not Found");
     }
 })
+
+app.post("/creatPost", (req, res) => {
+
+    const found = allUsers.find((items) => { return items.email == req.body.loginUser });
+    found.posts.push(req.body.postsData);
+    res.send(found);
+
+})
+
+app.post('/delPost', (req, res) => {
+    const postIndex = req.body.postIndex;
+    allUsers[0].posts.splice(postIndex, 1);
+    res.send(allUsers[0].posts);
+});
+
